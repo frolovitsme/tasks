@@ -3,6 +3,8 @@ package util;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.util.Arrays;
@@ -127,5 +129,59 @@ public class JTableUtils {
             }
         }
         return matrix;
+    }
+
+    /**
+     * Создание таблицы
+     */
+    public static void createTable() {
+        JFrame f = new JFrame();
+        JPanel panel = new JPanel();
+        JTable jTable;
+
+        String[] colHeadings = {"COLUMN1", "COLUMN2"};
+        int numRows = 5;
+        DefaultTableModel model = new DefaultTableModel(numRows, colHeadings.length);
+        model.setColumnIdentifiers(colHeadings);
+        jTable = new JTable(model);
+
+        JButton jButton1 = new JButton("Load data from file");
+
+        /*
+        Событие при нажатии на кнопку
+        Загрузка данных из файла в таблицу
+         */
+        ActionListener listener1 = e -> {
+            try {
+                int[][] array = FileUtils.readIntArray2FromFile(".\\input2.txt");
+                int[][] newArray = ArrayUtils.filterArray(array);
+                JTableUtils.writeArrayToJTable(jTable, newArray);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        };
+        jButton1.addActionListener(listener1);
+
+        /*
+        Событие при нажатии на кнопку
+        Сохранение данных из таблицы в файл
+         */
+        JButton jButton2 = new JButton("Save data to file");
+        ActionListener listener2 = e -> {
+            try {
+                int[][] data = JTableUtils.readIntMatrixFromJTable(jTable);
+                int[][] newArray = ArrayUtils.filterArray(data);
+                FileUtils.writeArrayToFile(".\\output2.txt", newArray);
+            } catch (FileNotFoundException | ParseException ex) {
+                ex.printStackTrace();
+            }
+        };
+        jButton2.addActionListener(listener2);
+
+        panel.add(jTable);
+        panel.add(jButton1);
+        panel.add(jButton2);
+        f.add(panel);
+        JFrameUtils.setParams(f);
     }
 }
