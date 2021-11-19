@@ -5,10 +5,18 @@ import java.util.List;
 
 public class ArrayUtils {
 
-    public static void fillArray(int[][] array,
-                                 List<Integer> indexRows,
-                                 List<Integer> indexColumn,
-                                 int[][] newArray) {
+    /**
+     * Заполнение массива
+     *
+     * @param array
+     * @param indexRows
+     * @param indexColumns
+     * @param newArray
+     */
+    private static void fillArray(int[][] array,
+                                  List<Integer> indexRows,
+                                  List<Integer> indexColumns,
+                                  int[][] newArray) {
         int k = 0;
         int n = 0;
         for (int row = 0; row < array.length; row++) {
@@ -16,7 +24,7 @@ public class ArrayUtils {
                 continue;
             }
             for (int col = 0; col < array[0].length; col++) {
-                if (indexColumn.contains(col)) {
+                if (indexColumns.contains(col)) {
                     continue;
                 }
                 newArray[k][n] = array[row][col];
@@ -27,7 +35,13 @@ public class ArrayUtils {
         }
     }
 
-    public static List<Integer> getIndexRows(int[][] array) {
+    /**
+     * Поиск строк, состоящих из одинаковых элементов
+     *
+     * @param array
+     * @return
+     */
+    private static List<Integer> getIndexRowsWithDuplicateValues(int[][] array) {
         int count = 0;
         List<Integer> list = new ArrayList<>();
         for (int row = 0; row < array.length; row++) {
@@ -44,7 +58,13 @@ public class ArrayUtils {
         return list;
     }
 
-    public static List<Integer> getIndexColumns(int[][] array) {
+    /**
+     * Поиск столбцов, состоящих из одинаковых элементов
+     *
+     * @param array
+     * @return
+     */
+    private static List<Integer> getIndexColumnWithDuplicateValues(int[][] array) {
         int count = 0;
         List<Integer> list = new ArrayList<>();
         for (int col = 0; col < array[0].length; col++) {
@@ -59,5 +79,21 @@ public class ArrayUtils {
                 count = 0;
         }
         return list;
+    }
+
+    /**
+     * Фильтрация массива
+     *
+     * @param array
+     * @return
+     */
+    public static int[][] filterArray(int[][] array) {
+        List<Integer> indexRows = getIndexRowsWithDuplicateValues(array);
+        List<Integer> indexColumns = getIndexColumnWithDuplicateValues(array);
+        int newCountRows = array.length - indexRows.size();
+        int newCountColumns = array[0].length - indexColumns.size();
+        int[][] newArray = new int[newCountRows][newCountColumns];
+        fillArray(array, indexRows, indexColumns, newArray);
+        return newArray;
     }
 }

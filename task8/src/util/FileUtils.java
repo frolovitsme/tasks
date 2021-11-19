@@ -10,6 +10,13 @@ import java.util.Scanner;
 
 public class FileUtils {
 
+    /**
+     * Чтение массива из файла
+     *
+     * @param fileName
+     * @return
+     * @throws Exception
+     */
     public static int[][] readIntArray2FromFile(String fileName) throws Exception {
         try {
             return toIntArray2(readLinesFromFile(fileName));
@@ -18,7 +25,7 @@ public class FileUtils {
         }
     }
 
-    public static int[][] toIntArray2(String[] lines) {
+    private static int[][] toIntArray2(String[] lines) {
         int[][] arr2 = new int[lines.length][];
         for (int r = 0; r < lines.length; r++) {
             arr2[r] = toIntArray(lines[r]);
@@ -26,7 +33,7 @@ public class FileUtils {
         return arr2;
     }
 
-    public static int[] toIntArray(String str) {
+    private static int[] toIntArray(String str) {
         Scanner scanner = new Scanner(str);
         scanner.useLocale(Locale.ROOT);
         scanner.useDelimiter("(\\s|[,;])+");
@@ -38,7 +45,7 @@ public class FileUtils {
         return toPrimitive(arr);
     }
 
-    public static int[] toPrimitive(Integer[] arr) {
+    private static int[] toPrimitive(Integer[] arr) {
         if (arr == null) {
             return null;
         }
@@ -49,7 +56,7 @@ public class FileUtils {
         return result;
     }
 
-    public static String[] readLinesFromFile(String fileName) throws FileNotFoundException {
+    private static String[] readLinesFromFile(String fileName) throws FileNotFoundException {
         List<String> lines;
         try (Scanner scanner = new Scanner(new File(fileName), "UTF-8")) {
             lines = new ArrayList<>();
@@ -60,12 +67,19 @@ public class FileUtils {
         return lines.toArray(new String[0]);
     }
 
+    /**
+     * Запись массива int[][] в файл
+     *
+     * @param fileName
+     * @param arr2
+     * @throws FileNotFoundException
+     */
     public static void writeArrayToFile(String fileName, int[][] arr2)
             throws FileNotFoundException {
         writeArrayToFile(fileName, arr2, null);
     }
 
-    public static void writeArrayToFile(String fileName, int[][] arr2, String itemFormat)
+    private static void writeArrayToFile(String fileName, int[][] arr2, String itemFormat)
             throws FileNotFoundException {
         try (PrintWriter out = new PrintWriter(fileName)) {
             out.println(toString(arr2, itemFormat));
@@ -83,7 +97,7 @@ public class FileUtils {
         return sb.toString();
     }
 
-    public static String toString(int[] arr, String itemFormat) {
+    private static String toString(int[] arr, String itemFormat) {
         if (arr == null) {
             return null;
         }
