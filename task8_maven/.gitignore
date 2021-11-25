@@ -1,0 +1,17 @@
+### Common Files ###
+
+target/
+!.mvn/wrapper/maven-wrapper.jar
+*.log
+*.tmp
+META-INF/
+out
+
+### IntelliJ IDEA ###
+
+.idea
+*.iws
+*.iml
+*.ipr
+
+
