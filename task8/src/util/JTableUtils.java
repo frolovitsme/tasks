@@ -25,7 +25,7 @@ public class JTableUtils {
      * @param table
      * @param array
      */
-    public static void writeArrayToJTable(JTable table, int[][] array) {
+    private static void writeArrayToJTable(JTable table, int[][] array) {
         writeArrayToJTable(table, array, "%d");
     }
 
@@ -81,7 +81,7 @@ public class JTableUtils {
      * @return
      * @throws ParseException
      */
-    public static int[][] readIntMatrixFromJTable(JTable table) throws ParseException {
+    private static int[][] readIntMatrixFromJTable(JTable table) throws ParseException {
         try {
             Integer[][] matrix = readMatrixFromJTable(table, Integer::parseInt);
             return (int[][]) Arrays.stream(matrix).map(JTableUtils::toPrimitive).toArray((n) -> new int[n][]);
@@ -134,7 +134,7 @@ public class JTableUtils {
     /**
      * Создание таблицы
      */
-    public static void createTable() {
+    public static void createTable(InputArgs inputArgs) {
         JFrame f = new JFrame();
         JPanel panel = new JPanel();
         JTable jTable;
@@ -153,7 +153,7 @@ public class JTableUtils {
          */
         ActionListener listener1 = e -> {
             try {
-                int[][] array = FileUtils.readIntArray2FromFile(".\\input2.txt");
+                int[][] array = FileUtils.readIntArray2FromFile(inputArgs.getInputFile());
                 int[][] newArray = ArrayUtils.filterArray(array);
                 JTableUtils.writeArrayToJTable(jTable, newArray);
             } catch (Exception ex) {
@@ -171,7 +171,7 @@ public class JTableUtils {
             try {
                 int[][] data = JTableUtils.readIntMatrixFromJTable(jTable);
                 int[][] newArray = ArrayUtils.filterArray(data);
-                FileUtils.writeArrayToFile(".\\output2.txt", newArray);
+                FileUtils.writeArrayToFile(inputArgs.getOutputFile(), newArray);
             } catch (FileNotFoundException | ParseException ex) {
                 ex.printStackTrace();
             }
