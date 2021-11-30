@@ -10,6 +10,8 @@ import java.util.Scanner;
 
 public class FileUtils {
 
+    private static final String RESOURCES_PATH = "C:\\Users\\rtmhigh\\Documents\\tasks\\task8\\";
+
     /**
      * Чтение массива из файла
      *
@@ -58,7 +60,7 @@ public class FileUtils {
 
     private static String[] readLinesFromFile(String fileName) throws FileNotFoundException {
         List<String> lines;
-        try (Scanner scanner = new Scanner(new File(fileName), "UTF-8")) {
+        try (Scanner scanner = new Scanner(new File(RESOURCES_PATH + fileName), "UTF-8")) {
             lines = new ArrayList<>();
             while (scanner.hasNext()) {
                 lines.add(scanner.nextLine());
@@ -76,7 +78,7 @@ public class FileUtils {
      */
     public static void writeArrayToFile(String fileName, int[][] arr2)
             throws FileNotFoundException {
-        writeArrayToFile(fileName, arr2, null);
+        writeArrayToFile(RESOURCES_PATH + fileName, arr2, null);
     }
 
     private static void writeArrayToFile(String fileName, int[][] arr2, String itemFormat)

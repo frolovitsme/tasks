@@ -52,6 +52,7 @@ public class ArrayUtils {
             }
             if (count == array[0].length) {
                 list.add(row);
+                count = 0;
             } else
                 count = 0;
         }
@@ -75,6 +76,7 @@ public class ArrayUtils {
             }
             if (count == array.length) {
                 list.add(col);
+                count = 0;
             } else
                 count = 0;
         }
